@@ -1,5 +1,6 @@
 #include <assert.h>
 #include <stdio.h>
+#include <setjmp.h>
 #include "StringCalculator.h"
 
 void test_empty_string() {
@@ -38,13 +39,11 @@ void test_ignore_large_numbers() {
 }
 
 void test_negative_numbers() {
-    if (fork() == 0) {
+    if (setjmp(jump_buffer) == 0) {
         add("-1,-2,3");
-        exit(0);
+        printf("Test negative numbers failed\n");
+        assert(0);  // Test should not reach here
     } else {
-        int status;
-        wait(&status);
-        assert(WEXITSTATUS(status) == 1);  // Negative numbers should exit with an error
         printf("Test negative numbers passed\n");
     }
 }
@@ -58,7 +57,7 @@ int main() {
     test_custom_delimiter();
     test_ignore_large_numbers();
     test_negative_numbers();
-    
+
     printf("All tests passed\n");
     return 0;
 }
