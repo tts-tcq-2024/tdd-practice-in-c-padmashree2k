@@ -44,7 +44,8 @@ void test_negative_numbers() {
     printf("Test negative numbers passed\n");
 }
 
-int main() {
+int main() 
+{
     test_empty_string();
     test_single_number();
     test_two_numbers();
