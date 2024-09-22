@@ -40,15 +40,18 @@ int add(const char* numbers) {
     char buffer[100] = {0};  // Temporary buffer to hold current number
     int buffer_pos = 0;
 
+    printf("Processing numbers: %s\n", numbers);  // Debug print
+
     for (int i = 0; numbers[i] != '\0'; i++) {
         char current = numbers[i];
 
-        if (is_digit(current)) {
-            buffer[buffer_pos++] = current;  // Collect digits
+        if (is_digit(current) || current == '-') {
+            buffer[buffer_pos++] = current;  // Collect digits or negative sign
         } else if (current == '\n' || strchr(delimiter, current)) {
             buffer[buffer_pos] = '\0';  // End current number
             if (buffer_pos > 0) {
                 int num = atoi(buffer);
+                printf("Parsed number: %d\n", num);  // Debug print
                 if (num < 0) {
                     negatives[neg_count++] = num;  // Collect negative numbers
                 } else if (num <= 1000) {
@@ -62,6 +65,7 @@ int add(const char* numbers) {
     // Handle the last number if there is any
     if (buffer_pos > 0) {
         int num = atoi(buffer);
+        printf("Parsed last number: %d\n", num);  // Debug print
         if (num < 0) {
             negatives[neg_count++] = num;
         } else if (num <= 1000) {
@@ -71,7 +75,7 @@ int add(const char* numbers) {
 
     // Check if there were any negative numbers
     if (neg_count > 0) {
-        printf("negatives not allowed: ");
+        printf("Negatives not allowed: ");
         for (int i = 0; i < neg_count; i++) {
             printf("%d ", negatives[i]);
         }
