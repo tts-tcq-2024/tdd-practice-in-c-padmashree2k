@@ -2,8 +2,11 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <setjmp.h>
 
 #define MAX_DELIMITER_LEN 10
+
+jmp_buf jump_buffer;  // For handling negative number errors
 
 // Helper function to check if a character is a digit
 bool is_digit(char c) {
@@ -76,9 +79,8 @@ int add(const char* numbers) {
             printf("%d ", negatives[i]);
         }
         printf("\n");
-        exit(1);
+        longjmp(jump_buffer, 1);  // Use longjmp to exit gracefully
     }
 
     return sum;
 }
-
