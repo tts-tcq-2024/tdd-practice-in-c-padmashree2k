@@ -1,6 +1,5 @@
 #include <assert.h>
 #include <stdio.h>
-#include <setjmp.h>
 #include "StringCalculator.h"
 
 void test_empty_string() {
@@ -39,13 +38,9 @@ void test_ignore_large_numbers() {
 }
 
 void test_negative_numbers() {
-    if (setjmp(jump_buffer) == 0) {
-        add("-1,-2,3");
-        printf("Test negative numbers failed\n");
-        assert(0);  // Test should not reach here
-    } else {
-        printf("Test negative numbers passed\n");
-    }
+    int result = add("-1,-2,3");
+    assert(result == -1);  // Expect error code -1 for negative numbers
+    printf("Test negative numbers passed\n");
 }
 
 int main() {
