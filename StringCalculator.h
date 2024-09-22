@@ -2,11 +2,8 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#include <setjmp.h>
 
 #define MAX_DELIMITER_LEN 10
-
-jmp_buf jump_buffer;  // For handling negative number errors
 
 // Helper function to check if a character is a digit
 bool is_digit(char c) {
@@ -28,7 +25,7 @@ const char* extract_delimiter(const char* str, char* delimiter) {
     return str;
 }
 
-// Function to split the string and return the sum
+// Function to split the string and return the sum or -1 for error (negatives)
 int add(const char* numbers) {
     if (strlen(numbers) == 0) {
         return 0;  // Empty string returns 0
@@ -79,7 +76,7 @@ int add(const char* numbers) {
             printf("%d ", negatives[i]);
         }
         printf("\n");
-        longjmp(jump_buffer, 1);  // Use longjmp to exit gracefully
+        return -1;  // Return error code for negative numbers
     }
 
     return sum;
