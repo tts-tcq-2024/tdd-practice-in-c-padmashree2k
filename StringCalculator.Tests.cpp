@@ -1,6 +1,6 @@
 #include <assert.h>
 #include <stdio.h>
-#include "StringCalculator.h"
+#include "string_calculator.c"
 
 void test_empty_string() {
     assert(add("") == 0);
@@ -38,6 +38,7 @@ void test_ignore_large_numbers() {
 }
 
 void test_negative_numbers() {
+    printf("Running negative number test...\n");
     int result = add("-1,-2,3");
     assert(result == -1);  // Expect error code -1 for negative numbers
     printf("Test negative numbers passed\n");
