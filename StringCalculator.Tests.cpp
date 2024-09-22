@@ -1,6 +1,6 @@
 #include <assert.h>
 #include <stdio.h>
-#include "string_calculator.c"
+#include "StringCalculator.h"
 
 void test_empty_string() {
     assert(add("") == 0);
